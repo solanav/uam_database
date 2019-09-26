@@ -3,6 +3,8 @@ import json
 import threading
 import os
 
+IMAGE_PATH = 'images/'
+
 NUM_THREADS = 32
 DEFAULT_IMAGE = 'https://moodle.uam.es/theme/image.php/essential/core/1545157517/u/f1'
 DEFAULT_IMAGE_NEW = 'https://moodle.uam.es/theme/image.php/essential/core/1568281597/u/f1'
@@ -18,16 +20,19 @@ def download_image(session, link, image_name):
         return
 
     # Check if file exists already, if so don't redownload it
-    if (os.path.isfile('images/' + str(image_name))):
+    if (os.path.isfile(IMAGE_PATH + str(image_name))):
         return
 
     r = session.get(link)
-    with open('images/' + str(image_name), 'wb') as f:
+    with open(IMAGE_PATH + str(image_name), 'wb') as f:
         f.write(r.content)
         print("[OK] Downloaded")
 
 def main():
     s = requests.Session()
+
+    if not os.path.exists(IMAGE_PATH):
+        os.makedirs(IMAGE_PATH)
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:67.0) Gecko/20100101 Firefox/67.0',
