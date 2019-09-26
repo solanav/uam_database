@@ -4,7 +4,6 @@ from urllib.parse import urlparse, parse_qs
 from pprint import pprint
 import time
 import json
-from tabulate import tabulate
 
 hostName = "localhost"
 serverPort = 8080
